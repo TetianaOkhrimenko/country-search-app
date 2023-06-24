@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap");
+
+html {
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: auto;
+  background-repeat: no-repeat;
+  font-family: "Libre Baskerville", serif;
+  background: radial-gradient(
+    circle at 24.1% 68.8%,
+    rgb(50, 50, 50) 0%,
+    rgb(0, 0, 0) 99.4%
+  );
+  color: #ffffff;
+  font-size: 16px;
+}
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  align-self: flex-end;
+  font-size: 1.6rem;
+  background: -webkit-linear-gradient(
+    -225deg,
+    #5d9fff 0%,
+    #b8dcff 48%,
+    #6bbbff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container {
+  margin: 4rem auto;
+}
+
+.hero {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.hero img {
+  width: 150px;
+}
+
+.form {
+  outline: none;
+  width: 50%;
+  max-width: 100%;
+  margin: 2rem auto;
+}
+
+.form input {
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 7px;
+  width: 70%;
+  color: #ffffff;
+  transition: all 400ms ease-in-out;
+  margin-bottom: 1rem;
+}
+
+.form input::placeholder {
+  color: #ffffff;
+  opacity: 0.6;
+  font-family: "Libre Baskerville", serif;
+}
+
+.form input:focus {
+  outline: none;
+  border: 1px solid #8dc6ff;
+  box-shadow: #8dc6ff 0px 0px 10px;
+}
+
+.form button {
+  width: 100px;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 400ms ease-in-out;
+  background: radial-gradient(
+    circle at 12.3% 19.3%,
+    rgb(85, 88, 218) 0%,
+    rgb(95, 209, 249) 100.2%
+  );
+  font-size: 16px;
+  font-family: "Libre Baskerville", serif;
+}
+
+.form button:hover {
+  transform: scale(1.1);
+}
+
+.form .error-msg {
+  display: block;
+  font-weight: 400;
+  color: #fb7777;
+}
+
+.countries_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 0 2rem;
+}
+
+.country-block {
+  border: 2px solid transparent;
+  border-radius: 5px;
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.country-block .flag-image {
+  width: 300px;
+  height: 200px;
+}
+
+.country-block .close-icon {
+  width: 24px;
+  cursor: pointer;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.country-heading {
+  text-transform: uppercase;
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+
+.country-block p {
+  align-self: flex-start;
+  margin-bottom: 0.7rem;
+  line-height: 1.2;
+  letter-spacing: 0.3px;
+  color: #c1c0b9;
+}
+
+.country-block p span {
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+}
