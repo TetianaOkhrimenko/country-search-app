@@ -165,14 +165,31 @@ h1 {
   color: rgb(255, 255, 255);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .countries_container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 30% 30% 30%;
+  }
+
+  .country-block .flag-image {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 992px) {
+  .countries_container {
+    grid-template-columns: 1fr 1fr;
   }
 
   .form {
     width: 100%;
     margin: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .countries_container {
+    grid-template-columns: 1fr;
   }
 }
 
