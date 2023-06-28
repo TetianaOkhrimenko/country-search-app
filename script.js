@@ -58,7 +58,9 @@ class UI {
     if (country[index].name.common.length > 0) {
       countriesContainer.prepend(countryBlock);
       countryBlock.innerHTML = ` <div class='icon-wrapper'><img class='close-icon' src = './images/close-icon.png'></div>
-      <img class='flag-image' src = '${country[index].flags.png}'>
+      <img class='flag-image' src = '${country[index].flags.png}' alt='${
+        country[index].flags.alt
+      }'>
     <h4 class='country-heading'>${country[index].name.common} </h4>
     <p><span>Official name: </span>${country[index].name.official}</p>
       <p><span>Capital: </span>${country[index].capital || "uknown"}</p>
@@ -77,7 +79,9 @@ class UI {
          .toString()
          .split(",")
          .join(", ") || "uknown"
-     }</p>`;
+     }</p><p><span>Find on a map: </span><a href='${
+        country[index].maps.googleMaps
+      }' class='map-link' target='_blank'>Click here</a></p>`;
 
       //countryBlock.style.borderColor = this.getRandomColor(this.borderColors);
       this.showRandomColor(
@@ -116,7 +120,6 @@ form.addEventListener("submit", async (event) => {
         // const countryCard = document.querySelector(".country-block");
         event.target.closest(".country-block").style.display = "none";
         //countryCard.style.display = "none";
-        console.log("Done");
       }
     });
     /* closeIcon.forEach((icon) => {
