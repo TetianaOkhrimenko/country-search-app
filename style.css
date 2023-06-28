@@ -219,6 +219,13 @@ h1 {
     height: 2.5rem;
   }
 
+  .form button:hover {
+    background: transparent;
+    border: 1px solid #6bbbff;
+    transform: none;
+    margin-bottom: 1rem;
+  }
+
   .countries_container {
     margin: 0 1rem;
   }
