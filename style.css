@@ -182,8 +182,8 @@ h1 {
   }
 
   .form {
-    width: 100%;
-    margin: 2rem;
+    width: 90%;
+    margin: 2rem 0.8rem;
   }
 }
 
@@ -209,11 +209,11 @@ h1 {
   }
 
   .form input {
-    width: 90%;
+    width: 100%;
     margin-right: 0;
   }
 
   .form button {
-    width: 90%;
+    width: 100%;
   }
 }
