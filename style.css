@@ -164,3 +164,39 @@ h1 {
   font-weight: 700;
   color: rgb(255, 255, 255);
 }
+
+@media (max-width: 768px) {
+  .countries_container {
+    grid-template-columns: 1fr;
+  }
+
+  .form {
+    width: 100%;
+    margin: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  h1 {
+    align-self: center;
+  }
+
+  .hero {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form input {
+    width: 90%;
+    margin-right: 0;
+  }
+
+  .form button {
+    width: 90%;
+  }
+}
