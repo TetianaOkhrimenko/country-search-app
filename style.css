@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap");
 
+@keyframes fadeIn {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
 html {
   min-height: 100%;
 }
@@ -127,6 +137,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: display 400ms ease-in-out;
 }
 
 .country-block .flag-image {
@@ -162,6 +173,10 @@ h1 {
 }
 
 .country-block p:nth-of-type(1) {
+  line-height: 1.5;
+}
+
+.country-block p:last-of-type {
   line-height: 1.5;
 }
 

@@ -68,13 +68,11 @@ class UI {
     <p><span>Population: </span>${+(
       country[index].population / 1000000
     ).toFixed(2)} mln</p>
-     <p><span>Continent: </span>${
-       country[index].continents[index] || "uknown"
-     }</p>
+     <p><span>Continent: </span>${country[index].continents[0] || "uknown"}</p>
      <p><span>Currency: </span>${
        country[index].currencies[Object.keys(country[index].currencies)].name ||
        "uknown"
-     } (${Object.keys(country[index].currencies)[index] || "uknown"})</p>
+     } (${Object.keys(country[index].currencies)[0] || "uknown"})</p>
      <p><span>Languages: </span>${
        Object.values(country[index].languages)
          .toString()
@@ -92,21 +90,52 @@ class UI {
     //  }
   }
 
-  clearCountry() {
-    const countryCard = document.querySelector(".country-block");
-    countryCard.style.display = "none";
+  clearCountry(card) {
+    //const countryCard = document.querySelector(".country-block");
+    //countryCard.style.display = "none";
+    card.style.animation = "fadeIn ease 2s";
+    card.style.animationFillMode = "forwards";
+    setTimeout(() => (card.style.display = "none"), 2000);
   }
 }
 
 form.addEventListener("submit", async (event) => {
   const inputCountry = input.value.trim();
   const ui = new UI();
+  const countryCardAll = countriesContainer.querySelectorAll(".country-block");
+  const countryCardArray = Array.from(countryCardAll);
 
   try {
     event.preventDefault();
     errorMessage.textContent = "";
     console.log(inputCountry);
-    console.log(event);
+
+    if (countryCardArray.length > 0) {
+      /* countryCardArray.forEach((card) => {
+        if (
+          card
+            .querySelector(".country-heading")
+            .textContent.toUpperCase()
+            .trim() === inputCountry.toUpperCase()
+        ) {
+          errorMessage.textContent = "This country is already shown";
+          return;
+        }
+      });*/
+
+      const existingCountry = countryCardArray.find((item) => {
+        const countryName = item.querySelector(".country-heading").textContent;
+        return (
+          countryName.toUpperCase().trim() === inputCountry.toUpperCase() ||
+          countryName.toUpperCase().trim().includes(inputCountry.toUpperCase())
+        );
+      });
+      if (existingCountry) {
+        errorMessage.textContent = "This country is already shown";
+        return;
+      }
+    }
+
     const api = new API();
     const countryAPI = await api.getCountry(inputCountry);
     console.log(countryAPI);
@@ -115,7 +144,6 @@ form.addEventListener("submit", async (event) => {
       ui.showCountry(countryAPI, index);
     }
     //ui.showCountry(countryAPI, 0);
-    console.log(document.querySelectorAll(".close-icon"));
 
     //const closeIcon = document.querySelectorAll(".close-icon");
 
@@ -124,7 +152,9 @@ form.addEventListener("submit", async (event) => {
       if (event.target.className === "close-icon") {
         //ui.clearCountry();
         // const countryCard = document.querySelector(".country-block");
-        event.target.closest(".country-block").style.display = "none";
+        const countryCard = event.target.closest(".country-block");
+        ui.clearCountry(countryCard);
+        //event.target.closest(".country-block").style.display = "none";
         //countryCard.style.display = "none";
       }
     });
