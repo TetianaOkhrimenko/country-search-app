@@ -90,12 +90,12 @@ class UI {
     //  }
   }
 
-  clearCountry(card) {
+  smoothlyClearUi(html, time) {
     //const countryCard = document.querySelector(".country-block");
     //countryCard.style.display = "none";
-    card.style.animation = "fadeIn ease 2s";
-    card.style.animationFillMode = "forwards";
-    setTimeout(() => (card.style.display = "none"), 2000);
+    html.style.animation = `fadeIn ease ${time}s`;
+    html.style.animationFillMode = "forwards";
+    setTimeout(() => (html.style.display = "none"), time * 1000);
   }
 }
 
@@ -130,8 +130,10 @@ form.addEventListener("submit", async (event) => {
           countryName.toUpperCase().trim().includes(inputCountry.toUpperCase())
         );
       });
-      if (existingCountry) {
+      if (existingCountry && inputCountry.length !== 0) {
+        errorMessage.style.display = "block";
         errorMessage.textContent = "This country is already shown";
+        ui.smoothlyClearUi(errorMessage, 5);
         return;
       }
     }
@@ -153,7 +155,10 @@ form.addEventListener("submit", async (event) => {
         //ui.clearCountry();
         // const countryCard = document.querySelector(".country-block");
         const countryCard = event.target.closest(".country-block");
-        ui.clearCountry(countryCard);
+        ui.smoothlyClearUi(countryCard, 1.5);
+        setTimeout(() => {
+          countryCard.remove();
+        }, 1500);
         //event.target.closest(".country-block").style.display = "none";
         //countryCard.style.display = "none";
       }
@@ -166,9 +171,13 @@ form.addEventListener("submit", async (event) => {
     });*/
   } catch (error) {
     if (inputCountry.length === 0) {
+      errorMessage.style.display = "block";
       errorMessage.textContent = `Input field is still empty 🙄`;
+      ui.smoothlyClearUi(errorMessage, 5);
     } else {
+      errorMessage.style.display = "block";
       errorMessage.textContent = `Please enter a valid name of country!`;
+      ui.smoothlyClearUi(errorMessage, 5);
     }
   } finally {
     form.reset();
