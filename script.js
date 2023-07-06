@@ -1,5 +1,7 @@
 "use strict";
 
+//DOM elements
+const heading = document.querySelector("h1");
 const countriesContainer = document.querySelector(".countries_container");
 const form = document.querySelector(".form");
 const input = document.querySelector(".form input");
@@ -7,8 +9,10 @@ const errorMessage = document.querySelector(".error-msg");
 const iconWrapper = document.querySelector(".icon-wrapper");
 const modeButton = form.querySelector(".mode");
 
+//VARIABLES
 let darkMode = true;
 
+//CLASSES
 class API {
   async getCountry(country) {
     const response = await fetch(
@@ -40,6 +44,9 @@ class UI {
     "#ff004d",
     "#ff847b",
   ];
+
+  childrenCountriesContainer = countriesContainer.children;
+  childrenCountriesContainerArray = Array.from(this.childrenCountriesContainer);
 
   getRandomColor(arr) {
     // get random index value
@@ -88,14 +95,16 @@ class UI {
     }' class='map-link' target='_blank'>🏳️‍🌈Click here</a></p>
     */
 
-    //countryBlock.style.borderColor = this.getRandomColor(this.borderColors);
     if (darkMode) {
+      //this.setDarkMode();
       this.showRandomColor(
         countryBlock,
         this.getRandomColor(this.borderColors)
       );
     } else {
-      this.showRandomColor(countryBlock, "#6bbbff");
+      this.showRandomColor(countryBlock, "rgb(116 169 221)");
+      countryBlock.style.borderColor = "transparent";
+      this.setLightMode();
     }
     //  }
   }
@@ -110,14 +119,53 @@ class UI {
 
   setLightMode() {
     document.body.style.background = "#eaeaea";
+    document.body.style.color = "#2b4450";
+    this.childrenCountriesContainerArray.forEach((card) => {
+      this.showRandomColor(card, "rgb(116 169 221)");
+      card.style.borderColor = "transparent";
+      const cardParagraphAll = document.querySelectorAll(".country-block p");
+      const cardSpanAll = document.querySelectorAll(".country-block p span ");
+      Array.from(cardParagraphAll).forEach((paragraph) => {
+        paragraph.style.color = "#2b4450";
+      });
+      Array.from(cardSpanAll).forEach((span) => {
+        span.style.color = "#2b4450";
+      });
+    });
+    input.style.border = "1px solid #6bbbff";
+    input.style.color = "#2b4450";
+    input.classList.add("light-mode");
+    heading.classList.add("light-mode-heading");
+    heading.classList.remove("dark-mode-heading");
   }
 
   setDarkMode() {
     document.body.style.background =
       "radial-gradient(circle at 24.1% 68.8%,rgb(50, 50, 50) 0%,rgb(0, 0, 0) 99.4%)";
+    document.body.style.color = "#ffffff";
+    this.childrenCountriesContainerArray.forEach((card) => {
+      this.showRandomColor(card, this.getRandomColor(this.borderColors));
+      const cardParagraphAll = document.querySelectorAll(".country-block p");
+      const cardSpanAll = document.querySelectorAll(".country-block p span ");
+      Array.from(cardParagraphAll).forEach((paragraph) => {
+        paragraph.style.color = "#c1c0b9";
+      });
+      Array.from(cardSpanAll).forEach((span) => {
+        span.style.color = "rgb(255, 255, 255)";
+      });
+    });
+    input.style.border = "1px solid #ffffff";
+    input.style.color = "#ffffff";
+    input.classList.add("dark-mode");
+    input.classList.remove("light-mode");
+    heading.classList.add("dark-mode-heading");
+    heading.classList.remove("light-mode-heading");
   }
 }
 
+//EVENTS
+
+//1.Event on submit form
 form.addEventListener("submit", async (event) => {
   const inputCountry = input.value.trim();
   const ui = new UI();
@@ -168,6 +216,7 @@ form.addEventListener("submit", async (event) => {
 
     //const closeIcon = document.querySelectorAll(".close-icon");
 
+    //2.Event on clicking close icon on card
     countriesContainer.addEventListener("click", (event) => {
       event.preventDefault();
       if (event.target.className === "close-icon") {
@@ -204,6 +253,7 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
+//Event on clicking button to change mode - dark/light
 modeButton.addEventListener("click", (event) => {
   event.preventDefault();
   const imageModeButton = form.querySelector(".mode img");
@@ -218,5 +268,4 @@ modeButton.addEventListener("click", (event) => {
     imageModeButton.src = "./images/night-mode.png";
     ui.setDarkMode();
   }
-  console.log(darkMode);
 });
