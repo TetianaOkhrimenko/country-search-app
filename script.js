@@ -104,7 +104,15 @@ class UI {
     } else {
       this.showRandomColor(countryBlock, "rgb(116 169 221)");
       countryBlock.style.borderColor = "transparent";
-      this.setLightMode();
+      //this.setLightMode();
+      const cardParagraphAll = document.querySelectorAll(".country-block p");
+      const cardSpanAll = document.querySelectorAll(".country-block p span ");
+      Array.from(cardParagraphAll).forEach((paragraph) => {
+        paragraph.style.color = "#2b4450";
+      });
+      Array.from(cardSpanAll).forEach((span) => {
+        span.style.color = "#2b4450";
+      });
     }
     //  }
   }
@@ -268,4 +276,5 @@ modeButton.addEventListener("click", (event) => {
     imageModeButton.src = "./images/night-mode.png";
     ui.setDarkMode();
   }
+  console.log(darkMode);
 });
