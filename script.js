@@ -5,6 +5,9 @@ const form = document.querySelector(".form");
 const input = document.querySelector(".form input");
 const errorMessage = document.querySelector(".error-msg");
 const iconWrapper = document.querySelector(".icon-wrapper");
+const modeButton = form.querySelector(".mode");
+
+let darkMode = true;
 
 class API {
   async getCountry(country) {
@@ -86,7 +89,14 @@ class UI {
     */
 
     //countryBlock.style.borderColor = this.getRandomColor(this.borderColors);
-    this.showRandomColor(countryBlock, this.getRandomColor(this.borderColors));
+    if (darkMode) {
+      this.showRandomColor(
+        countryBlock,
+        this.getRandomColor(this.borderColors)
+      );
+    } else {
+      this.showRandomColor(countryBlock, "#6bbbff");
+    }
     //  }
   }
 
@@ -96,6 +106,15 @@ class UI {
     html.style.animation = `fadeIn ease ${time}s`;
     html.style.animationFillMode = "forwards";
     setTimeout(() => (html.style.display = "none"), time * 1000);
+  }
+
+  setLightMode() {
+    document.body.style.background = "#eaeaea";
+  }
+
+  setDarkMode() {
+    document.body.style.background =
+      "radial-gradient(circle at 24.1% 68.8%,rgb(50, 50, 50) 0%,rgb(0, 0, 0) 99.4%)";
   }
 }
 
@@ -183,4 +202,21 @@ form.addEventListener("submit", async (event) => {
     form.reset();
     input.focus();
   }
+});
+
+modeButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  const imageModeButton = form.querySelector(".mode img");
+  const ui = new UI();
+
+  if (darkMode) {
+    imageModeButton.src = "./images/light-mode.png";
+    darkMode = false;
+    ui.setLightMode();
+  } else {
+    darkMode = true;
+    imageModeButton.src = "./images/night-mode.png";
+    ui.setDarkMode();
+  }
+  console.log(darkMode);
 });
