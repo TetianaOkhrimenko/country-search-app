@@ -10,7 +10,9 @@ const iconWrapper = document.querySelector(".icon-wrapper");
 const modeButton = form.querySelector(".mode");
 
 //VARIABLES
-let darkMode = true;
+
+let mode = localStorage.getItem("mode") || "dark";
+//let darkMode = localStorage.getItem("mode") || true;
 
 //CLASSES
 class API {
@@ -95,12 +97,14 @@ class UI {
     }' class='map-link' target='_blank'>🏳️‍🌈Click here</a></p>
     */
 
-    if (darkMode) {
+    //if (darkMode) {
+    if (localStorage.getItem("mode") === "dark") {
       //this.setDarkMode();
       this.showRandomColor(
         countryBlock,
         this.getRandomColor(this.borderColors)
       );
+      return;
     } else {
       this.showRandomColor(countryBlock, "rgb(116 169 221)");
       countryBlock.style.borderColor = "transparent";
@@ -169,6 +173,20 @@ class UI {
     heading.classList.add("dark-mode-heading");
     heading.classList.remove("light-mode-heading");
   }
+}
+
+if (mode === "dark") {
+  const imageModeButton = form.querySelector(".mode img");
+  const ui = new UI();
+  imageModeButton.src = "./images/night-mode.png";
+  ui.setDarkMode();
+  localStorage.setItem("mode", "dark");
+} else {
+  const imageModeButton = form.querySelector(".mode img");
+  const ui = new UI();
+  imageModeButton.src = "./images/light-mode.png";
+  ui.setLightMode();
+  localStorage.setItem("mode", "light");
 }
 
 //EVENTS
@@ -267,14 +285,24 @@ modeButton.addEventListener("click", (event) => {
   const imageModeButton = form.querySelector(".mode img");
   const ui = new UI();
 
-  if (darkMode) {
+  if (localStorage.getItem("mode") === "light") {
+    localStorage.setItem("mode", "dark");
+    imageModeButton.src = "./images/night-mode.png";
+    ui.setDarkMode();
+  } else {
+    localStorage.setItem("mode", "light");
     imageModeButton.src = "./images/light-mode.png";
+    ui.setLightMode();
+  }
+  /*if (darkMode) {
+    imageModeButton.src = "./images/light-mode.png";
+    localStorage.setItem("mode", darkMode);
     darkMode = false;
     ui.setLightMode();
   } else {
+    localStorage.setItem("mode", darkMode);
     darkMode = true;
     imageModeButton.src = "./images/night-mode.png";
     ui.setDarkMode();
-  }
-  console.log(darkMode);
+  }*/
 });

@@ -130,6 +130,10 @@ h1 {
   transform: scale(1.1);
 }
 
+.msg_wrapper {
+  height: 1rem;
+}
+
 .form .error-msg {
   display: block;
   font-weight: 400;
@@ -294,7 +298,6 @@ h1 {
     background: transparent;
     border: 1px solid #6bbbff;
     transform: none;
-    margin-bottom: 1rem;
   }
 
   .countries_container {
