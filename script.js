@@ -59,6 +59,12 @@ class LocalStorage {
     });
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(results));
   }
+
+  removeCountryFromLocalStorage(country, index) {
+    let results = this.getResultsFromLocalStorage();
+    results.splice(index, 1);
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(results));
+  }
 }
 
 class UI {
@@ -218,6 +224,7 @@ if (mode === "dark") {
   localStorage.setItem("mode", "light");
 }
 
+//Local Storage functions
 function showCountriesFromLocalStorage() {
   const localSorage = new LocalStorage();
   const ui = new UI();
@@ -315,7 +322,7 @@ form.addEventListener("submit", async (event) => {
     //const closeIcon = document.querySelectorAll(".close-icon");
 
     //2.Event on clicking close icon on card
-    countriesContainer.addEventListener("click", (event) => {
+    /*countriesContainer.addEventListener("click", (event) => {
       event.preventDefault();
       if (event.target.className === "close-icon") {
         //ui.clearCountry();
@@ -328,7 +335,7 @@ form.addEventListener("submit", async (event) => {
         //event.target.closest(".country-block").style.display = "none";
         //countryCard.style.display = "none";
       }
-    });
+    });*/
     /* closeIcon.forEach((icon) => {
       icon.addEventListener("click", () => {
         ui.clearCountry();
@@ -382,11 +389,24 @@ modeButton.addEventListener("click", (event) => {
 countriesContainer.addEventListener("click", (event) => {
   event.preventDefault();
   const ui = new UI();
+  const localStorage = new LocalStorage();
   if (event.target.className === "close-icon") {
-    const countryCard = event.target.closest(".country-block");
-    ui.smoothlyClearUi(countryCard, 1.5);
+    const deletedCountryCard = event.target.closest(".country-block");
+    const countryBlockAll = Array.from(
+      document.querySelectorAll(".country-block")
+    ).reverse();
+    const indexOfDeletedCard = countryBlockAll.findIndex(
+      (card) => card === deletedCountryCard
+    );
+
+    localStorage.removeCountryFromLocalStorage(
+      deletedCountryCard,
+      indexOfDeletedCard
+    );
+    console.log(indexOfDeletedCard);
+    ui.smoothlyClearUi(deletedCountryCard, 1.5);
     setTimeout(() => {
-      countryCard.remove();
+      deletedCountryCard.remove();
     }, 1500);
   }
 });
