@@ -32,6 +32,35 @@ class API {
   }
 }
 
+class LocalStorage {
+  STORAGE_KEY = "results";
+
+  getResultsFromLocalStorage() {
+    const results = JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || [];
+    return results;
+  }
+
+  storeResultsInLocalStorage(country, index) {
+    let results = this.getResultsFromLocalStorage();
+    console.log(results);
+    results.push({
+      flag: country[index].flags.png,
+      alt: country[index].flags.alt,
+      countryName: country[index].name.common,
+      officialName: country[index].name.official,
+      capital: country[index].capital,
+      population: +(country[index].population / 1000000).toFixed(2),
+      continent: country[index].continents[0],
+      currency:
+        country[index].currencies[Object.keys(country[index].currencies)]
+          .name || "uknown",
+      currencyName: Object.keys(country[index].currencies)[0] || "uknown",
+      languages: Object.values(country[index].languages),
+    });
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(results));
+  }
+}
+
 class UI {
   borderColors = [
     "#a696c8",
@@ -189,12 +218,54 @@ if (mode === "dark") {
   localStorage.setItem("mode", "light");
 }
 
+function showCountriesFromLocalStorage() {
+  const localSorage = new LocalStorage();
+  const ui = new UI();
+  const results = localSorage.getResultsFromLocalStorage();
+
+  results.forEach((result) => {
+    const countryBlock = document.createElement("div");
+    countryBlock.classList.add("country-block");
+
+    countriesContainer.prepend(countryBlock);
+    countryBlock.innerHTML = ` <div class='icon-wrapper'><img class='close-icon' src = './images/close-icon.png'></div>
+      <img class='flag-image' src = '${result.flag}' alt='${result.alt}'>
+    <h4 class='country-heading'>${result.countryName} </h4>
+    <p><span>Official name: </span>${result.officialName}</p>
+      <p><span>Capital: </span>${result.capital || "uknown"}</p>
+    <p><span>Population: </span>${result.population} mln</p>
+     <p><span>Continent: </span>${result.continent || "uknown"}</p>
+     <p><span>Currency: </span>${result.currency}(${result.currencyName})</p>
+     <p><span>Languages: </span>${result.languages || "uknown"}</p>`;
+
+    if (localStorage.getItem("mode") === "dark") {
+      ui.showRandomColor(countryBlock, ui.getRandomColor(ui.borderColors));
+      return;
+    } else {
+      ui.showRandomColor(countryBlock, "rgb(116 169 221)");
+      countryBlock.style.borderColor = "transparent";
+      //this.setLightMode();
+      const cardParagraphAll = document.querySelectorAll(".country-block p");
+      const cardSpanAll = document.querySelectorAll(".country-block p span ");
+      Array.from(cardParagraphAll).forEach((paragraph) => {
+        paragraph.style.color = "#2b4450";
+      });
+      Array.from(cardSpanAll).forEach((span) => {
+        span.style.color = "#2b4450";
+      });
+    }
+  });
+}
+
+showCountriesFromLocalStorage();
+
 //EVENTS
 
 //1.Event on submit form
 form.addEventListener("submit", async (event) => {
   const inputCountry = input.value.trim();
   const ui = new UI();
+  const localSt = new LocalStorage();
   const countryCardAll = countriesContainer.querySelectorAll(".country-block");
   const countryCardArray = Array.from(countryCardAll);
 
@@ -237,6 +308,7 @@ form.addEventListener("submit", async (event) => {
 
     for (let index = 0; index < countryAPI.length; index++) {
       ui.showCountry(countryAPI, index);
+      localSt.storeResultsInLocalStorage(countryAPI, index);
     }
     //ui.showCountry(countryAPI, 0);
 
@@ -305,4 +377,16 @@ modeButton.addEventListener("click", (event) => {
     imageModeButton.src = "./images/night-mode.png";
     ui.setDarkMode();
   }*/
+});
+
+countriesContainer.addEventListener("click", (event) => {
+  event.preventDefault();
+  const ui = new UI();
+  if (event.target.className === "close-icon") {
+    const countryCard = event.target.closest(".country-block");
+    ui.smoothlyClearUi(countryCard, 1.5);
+    setTimeout(() => {
+      countryCard.remove();
+    }, 1500);
+  }
 });
