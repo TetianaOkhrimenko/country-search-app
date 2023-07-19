@@ -242,7 +242,7 @@ function showCountriesFromLocalStorage() {
       <p><span>Capital: </span>${result.capital || "uknown"}</p>
     <p><span>Population: </span>${result.population} mln</p>
      <p><span>Continent: </span>${result.continent || "uknown"}</p>
-     <p><span>Currency: </span>${result.currency}(${result.currencyName})</p>
+     <p><span>Currency: </span>${result.currency} (${result.currencyName})</p>
      <p><span>Languages: </span>${result.languages || "uknown"}</p>`;
 
     if (localStorage.getItem("mode") === "dark") {
@@ -301,7 +301,11 @@ form.addEventListener("submit", async (event) => {
           countryName.toUpperCase().trim().includes(inputCountry.toUpperCase())
         );
       });
-      if (existingCountry && inputCountry.length !== 0) {
+      if (
+        existingCountry &&
+        inputCountry.length !== 0 &&
+        existingCountry.style.display !== "block"
+      ) {
         errorMessage.style.display = "block";
         errorMessage.textContent = "This country is already shown";
         ui.smoothlyClearUi(errorMessage, 5);
