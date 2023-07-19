@@ -4,6 +4,7 @@
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     display: none;
@@ -176,7 +177,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: display 400ms ease-in-out;
+  transition: all 1000ms ease-in-out;
 }
 
 .country-block .flag-image {

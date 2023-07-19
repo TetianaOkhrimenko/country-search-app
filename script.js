@@ -399,6 +399,7 @@ countriesContainer.addEventListener("click", (event) => {
       (card) => card === deletedCountryCard
     );
 
+    deletedCountryCard.style.transform = "scale(0.1)";
     localStorage.removeCountryFromLocalStorage(
       deletedCountryCard,
       indexOfDeletedCard
