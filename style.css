@@ -118,7 +118,8 @@ h1 {
   color: #ffffff;
   cursor: pointer;
   transition: all 400ms ease-in-out;
-  background: radial-gradient(
+  background-size: 130% auto;
+  background-image: radial-gradient(
     circle at 12.3% 19.3%,
     rgb(85, 88, 218) 0%,
     rgb(95, 209, 249) 100.2%
@@ -128,7 +129,8 @@ h1 {
 }
 
 .form button:hover {
-  transform: scale(1.1);
+  transform: scale(1.02);
+  background-position: right top;
 }
 
 .msg_wrapper {
@@ -161,6 +163,11 @@ h1 {
 
 .mode img {
   width: 24px;
+  transition: transform 400ms ease-in-out;
+}
+
+.mode img:hover {
+  transform: rotate(60deg);
 }
 
 .countries_container {
